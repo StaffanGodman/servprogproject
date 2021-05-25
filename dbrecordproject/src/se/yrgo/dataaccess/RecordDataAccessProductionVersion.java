@@ -72,9 +72,7 @@ public class RecordDataAccessProductionVersion implements RecordDataAccess {
 		Collector c = (Collector)em.createQuery("from Collector collector where collector.collectorId= :id")
 				.setParameter("id", id).getSingleResult();
 		c.setOwnedRecords(collector.getOwnedRecords());
-		em.flush();
-		
-		
+		em.flush();		
 	}
 
 	@Override
