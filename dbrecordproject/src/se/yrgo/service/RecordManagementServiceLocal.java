@@ -11,7 +11,7 @@ public interface RecordManagementServiceLocal {
 	public void registerRecordRelease(RecordRelease recordRelease);
 	public void registerRecordCopy(RecordCopy recordCopy);
 	public List<Collector>getAllCollectors();
-	public List<Collector>getCollectorByUserName(String userName);
+	public Collector getCollectorByUserName(String userName);
 	public List<RecordRelease>getAllRecordReleases();
 	public List<RecordRelease>searchByGenre(String genre);
 	public List<RecordCopy>getCopiesByCollector(Collector collector);

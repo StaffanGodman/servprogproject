@@ -57,7 +57,7 @@ public class RecordManagementImplementation implements RecordManagementService, 
 	}
 
 	@Override
-	public List<Collector> getCollectorByUserName(String userName) {
+	public Collector getCollectorByUserName(String userName) {
 		return dao.findCollectorByUserName(userName);
 	}
 

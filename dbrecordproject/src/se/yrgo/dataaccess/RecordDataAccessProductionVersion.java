@@ -35,7 +35,16 @@ public class RecordDataAccessProductionVersion implements RecordDataAccess {
 
 	@Override
 	public void insertRecordCopy(RecordCopy recordCopy) {
-		em.persist(recordCopy);
+		//em.persist(recordCopy);
+		String userName = recordCopy.getCollector().getUserName();
+		Collector c = this.findCollectorByUserName(userName);
+		
+		String serialNo = recordCopy.getRecordRelease().getSerialNo();
+		RecordRelease rr = (RecordRelease)em.createQuery("select recordrelease from RecordRelease recordrelease where recordrelease.serialNo= :serialNo")
+		.setParameter("serialNo", serialNo);
+		em.refresh(rr);
+		em.refresh(c);
+		c.createAndAddOwnedCopy(rr);
 		
 	}
 
@@ -47,10 +56,10 @@ public class RecordDataAccessProductionVersion implements RecordDataAccess {
 	}
 	
 	@Override
-	public List<Collector> findCollectorByUserName(String userName) {
+	public Collector findCollectorByUserName(String userName) {
 		Query q = em.createQuery("select collector from Collector collector where collector.userName= :username");
 		q.setParameter("username", userName);
-		return q.getResultList();
+		return (Collector)q.getSingleResult();
 	}
 
 	@Override

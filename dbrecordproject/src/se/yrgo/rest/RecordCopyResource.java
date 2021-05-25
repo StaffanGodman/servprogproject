@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.websocket.server.PathParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
@@ -19,15 +22,18 @@ public class RecordCopyResource {
 	@Inject
 	public RecordManagementServiceLocal service;
 	
-	@GET
+	@POST
 	@Produces("application/JSON")
-	public void createRecordCopy(RecordCopy recordCopy) {
+	@Consumes("application/JSON")
+	public RecordCopy createRecordCopy(RecordCopy recordCopy) {
 		service.registerRecordCopy(recordCopy);
+		return recordCopy;
 	}
 	
 	@GET
 	@Produces("application/JSON")
-	public List<RecordCopy> findRecordCopyByCollector(Collector collector) {
+	@Path("{collector}")
+	public List<RecordCopy> findRecordCopyByCollector(@PathParam("collector") Collector collector) {
 		return service.getCopiesByCollector(collector);
 	}
 	

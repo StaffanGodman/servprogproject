@@ -12,7 +12,7 @@ public interface RecordDataAccess {
 	public void insertCollector(Collector collector);
 	public void insertRecordCopy(RecordCopy recordCopy);
 	public List<Collector>findAllCollectors();
-	public List<Collector> findCollectorByUserName(String userName);
+	public Collector findCollectorByUserName(String userName);
 	public List<RecordRelease>findAllRecordReleases();
 	public List<RecordRelease>findByGenre(String genre);
 	public List<RecordCopy>findCopiesByCollector(Collector collector);

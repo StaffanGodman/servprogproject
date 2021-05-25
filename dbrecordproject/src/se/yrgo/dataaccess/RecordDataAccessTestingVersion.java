@@ -11,8 +11,7 @@ import se.yrgo.domain.RecordCopy;
 import se.yrgo.domain.RecordRelease;
 
 @Stateless
-// @Alternative
-@TestingDao
+@Alternative
 public class RecordDataAccessTestingVersion implements RecordDataAccess {
 
 	@Override
@@ -26,13 +25,13 @@ public class RecordDataAccessTestingVersion implements RecordDataAccess {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void insertRecordCopy(RecordCopy recordCopy) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public List<Collector> findAllCollectors() {
 		Collector col1 = new Collector("Staffan", "staffan@mail.com");
@@ -64,7 +63,7 @@ public class RecordDataAccessTestingVersion implements RecordDataAccess {
 	}
 
 	@Override
-	public List<Collector> findCollectorByUserName(String userName) {
+	public Collector findCollectorByUserName(String userName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

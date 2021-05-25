@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import se.yrgo.domain.Collector;
 import se.yrgo.service.RecordManagementServiceLocal;
 
+
 @Stateless
 @Path("/collectors")
 public class CollectorResource {
@@ -29,7 +30,7 @@ public class CollectorResource {
 	@GET
 	@Produces("application/JSON")
 	@Path("{userName}")
-	public List<Collector> findCollectorByUserName(@PathParam("userName")String userName) {
+	public Collector findCollectorByUserName(@PathParam("userName")String userName) {
 		return service.getCollectorByUserName(userName);
 	}
 	

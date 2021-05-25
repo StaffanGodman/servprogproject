@@ -1,7 +1,7 @@
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 public class RecordRelease {
 
@@ -11,8 +11,21 @@ public class RecordRelease {
 		private String serialNo; // candidate key
 		private String genre;
 		private int releaseYear;
+		private List<RecordCopy> copies ;
 		
-		public RecordRelease() {}
+		public RecordRelease() {
+			this.copies = new ArrayList<RecordCopy>();
+		}
+
+		public RecordRelease(String title, String artist, String serialNo, String genre, int releaseYear) {
+			super();
+			this.title = title;
+			this.artist = artist;
+			this.serialNo = serialNo;
+			this.genre = genre;
+			this.releaseYear = releaseYear;
+			this.copies  = new ArrayList<RecordCopy>();
+		}
 
 		public String getTitle() {
 			return title;
@@ -59,6 +72,13 @@ public class RecordRelease {
 		}
 		public void setReleaseId(int rr) {
 			this.releaseId = rr;
+		}
+		
+		public List<RecordCopy> getCopies() {
+			return Collections.unmodifiableList(copies);
+		}
+		public void addCopies(RecordCopy recordcopy) {
+			this.copies.add(recordcopy);
 		}
 	}
 
