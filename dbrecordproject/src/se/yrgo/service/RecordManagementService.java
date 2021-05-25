@@ -7,12 +7,12 @@ import se.yrgo.domain.*;
 
 @Remote
 public interface RecordManagementService {
+	public void registerRecord(Record record);
 	public void registerCollector(Collector collector);
-	public void registerRecordRelease(RecordRelease recordRelease);
-	public void registerRecordCopy(RecordCopy recordCopy);
 	public List<Collector>getAllCollectors();
 	public Collector getCollectorByUserName(String userName);
-	public List<RecordRelease>getAllRecordReleases();
-	public List<RecordRelease>searchByGenre(String genre);
-	public List<RecordCopy>getCopiesByCollector(Collector collector);
+	public List<Record>getAllRecords();
+	public List<Record>getByGenre(String genre);
+	public List<Record>getRecordsByCollector(Collector collector);
+	public void updateCollector(int id, Collector collector);
 }

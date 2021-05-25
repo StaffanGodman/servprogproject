@@ -11,35 +11,34 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-
-import se.yrgo.domain.RecordRelease;
+import se.yrgo.domain.Record;
 import se.yrgo.service.RecordManagementServiceLocal;
 
 @Stateless
-@Path("/recordrelease")
-public class RecordReleaseResource {
+@Path("/record")
+public class RecordResource {
 
 	@Inject
 	public RecordManagementServiceLocal service;
 	
 	@GET
 	@Produces("application/JSON")
-	public List<RecordRelease> getAllRecordReleases() {
-	       return service.getAllRecordReleases();
+	public List<Record> getAllRecords() {
+	       return service.getAllRecords();
 	}
 	
 	@GET
 	@Produces("application/JSON")
 	@Path("{genre}")
-	public List<RecordRelease> getRecordReleaseByGenre(@PathParam("genre")String genre) {
-	       return service.searchByGenre(genre);
+	public List<Record> getRecordByGenre(@PathParam("genre")String genre) {
+	       return service.getByGenre(genre);
 	}
 	
 	@POST
 	@Produces("application/JSON")
 	@Consumes("application/JSON")
-	public RecordRelease createRecord(RecordRelease rr) {
-		service.registerRecordRelease(rr);
+	public Record createRecord(Record rr) {
+		service.registerRecord(rr);
 		return rr;
 	}
 	

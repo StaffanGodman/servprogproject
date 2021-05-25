@@ -29,25 +29,25 @@ public class Collector implements java.io.Serializable{
 	private String userName;
 	//@Column(unique = true)
 	private String email;
-	@OneToMany(mappedBy="collector", cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
-	private List<RecordCopy> ownedCopies;
+	@OneToMany(cascade= {CascadeType.ALL},fetch=FetchType.EAGER)
+	private List<Record> ownedRecords;
 	
 	public Collector() {
-		this.ownedCopies  = new ArrayList<RecordCopy>();
+		this.ownedRecords  = new ArrayList<Record>();
 	}
 
 	public Collector(String userName, String email) {
 		this.userName = userName;
 		this.email = email;
-		this.ownedCopies = new ArrayList<RecordCopy>();
+		this.ownedRecords = new ArrayList<Record>();
+	}
+
+	public int getCollectorId() {
+		return collectorId;
 	}
 
 	public void setCollectorId(int collectorId) {
 		this.collectorId = collectorId;
-	}
-
-	public void setOwnedCopies(List<RecordCopy> ownedCopies) {
-		this.ownedCopies = ownedCopies;
 	}
 
 	public String getUserName() {
@@ -66,29 +66,17 @@ public class Collector implements java.io.Serializable{
 		this.email = email;
 	}
 
-	public int getCollectorId() {
-		return collectorId;
+	public List<Record> getOwnedRecords() {
+		return ownedRecords;
 	}
 
-	@Override
-	public String toString() {
-		return "Collector [collectorId=" + collectorId + ", userName=" + userName + ", email=" + email + "]";
+	public void setOwnedRecords(List<Record> ownedRecords) {
+		this.ownedRecords = ownedRecords;
+	}
+	
+	public void addRecordToOwnedRecords(Record record) {
+		this.ownedRecords.add(record);
 	}
 
-	public List<RecordCopy> getOwnedCopies() {
-		return Collections.unmodifiableList(ownedCopies);
-	}
-	
-	public void addOwnedCopy(RecordCopy rc, RecordRelease rr) {
-		rc.setCollector(this);
-		rc.setRecordRelease(rr);
-		this.ownedCopies.add(rc);
-		rr.addCopies(rc);	
-	}
-	
-	public void createAndAddOwnedCopy(RecordRelease rr) {
-		RecordCopy rc = new RecordCopy();
-		this.addOwnedCopy(rc, rr);
-	}
 }
 

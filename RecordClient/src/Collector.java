@@ -7,23 +7,26 @@ public class Collector {
 	private int collectorId; // primary key
 	private String userName;
 	private String email;
-	private List<RecordCopy> ownedCopies;
+	private List<Record> ownedRecords;
 
 	public Collector() {
-		this.ownedCopies  = new ArrayList<RecordCopy>();
+		this.ownedRecords  = new ArrayList<Record>();
 	}
-	
+
 	public Collector(String userName, String email) {
 		this.userName = userName;
 		this.email = email;
-		this.ownedCopies  = new ArrayList<RecordCopy>();
+		this.ownedRecords = new ArrayList<Record>();
+	}
+
+	public int getCollectorId() {
+		return collectorId;
 	}
 
 	public void setCollectorId(int collectorId) {
 		this.collectorId = collectorId;
-		
 	}
-	
+
 	public String getUserName() {
 		return userName;
 	}
@@ -40,32 +43,16 @@ public class Collector {
 		this.email = email;
 	}
 
-	public int getCollectorId() {
-		return collectorId;
+	public List<Record> getOwnedRecords() {
+		return Collections.unmodifiableList(ownedRecords);
 	}
 
+	public void setOwnedRecords(List<Record> ownedRecords) {
+		this.ownedRecords = ownedRecords;
+	}
 	
-	
-	@Override
-	public String toString() {
-		return "Collector [collectorId=" + collectorId + ", userName=" + userName + ", email=" + email
-				+ ", ownedCopies=" + ownedCopies + "]";
+	public void addRecordToOwnedRecords(Record record) {
+		this.ownedRecords.add(record);
 	}
 
-	public void addOwnedCopy(RecordCopy rc , RecordRelease rr) {
-		rc.setCollector(this);
-		rc.setRecordRelease(rr);
-		this.ownedCopies.add(rc);
-		rr.addCopies(rc);
-	}
-	
-	public void createAndAddOwnedCopy(RecordRelease rr) {
-		RecordCopy rc = new RecordCopy();
-		this.addOwnedCopy(rc, rr);
-	}
-	
-	public List<RecordCopy> getOwnedCopies() {
-		return Collections.unmodifiableList(ownedCopies);
-	}
-	
 }

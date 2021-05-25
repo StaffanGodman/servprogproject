@@ -10,20 +10,18 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import se.yrgo.domain.Collector;
-import se.yrgo.domain.RecordCopy;
-import se.yrgo.domain.RecordRelease;
+import se.yrgo.domain.Record;
 
 @Stateless
 @Default
-@ProductionDao
 public class RecordDataAccessProductionVersion implements RecordDataAccess {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
-	public void insertRecordRelease(RecordRelease recordRelease) {
-		em.persist(recordRelease);
+	public void insertRecord(Record record) {
+		em.persist(record);
 		
 	}
 
@@ -34,55 +32,47 @@ public class RecordDataAccessProductionVersion implements RecordDataAccess {
 	}
 
 	@Override
-	public void insertRecordCopy(RecordCopy recordCopy) {
-		//em.persist(recordCopy);
-		String userName = recordCopy.getCollector().getUserName();
-		Collector c = this.findCollectorByUserName(userName);
-		
-		String serialNo = recordCopy.getRecordRelease().getSerialNo();
-		RecordRelease rr = (RecordRelease)em.createQuery("select recordrelease from RecordRelease recordrelease where recordrelease.serialNo= :serialNo")
-		.setParameter("serialNo", serialNo);
-		em.refresh(rr);
-		em.refresh(c);
-		c.createAndAddOwnedCopy(rr);
-		
-	}
-
-	@Override
 	public List<Collector> findAllCollectors() {
 		Query q = em.createQuery("select collector from Collector collector");
-		List<Collector> collectors = q.getResultList();
-		return collectors;
+		return q.getResultList();
 	}
-	
+
 	@Override
 	public Collector findCollectorByUserName(String userName) {
 		Query q = em.createQuery("select collector from Collector collector where collector.userName= :username");
 		q.setParameter("username", userName);
-		return (Collector)q.getSingleResult();
+		return (Collector) q.getSingleResult();
 	}
 
 	@Override
-	public List<RecordRelease> findAllRecordReleases() {
-		Query q = em.createQuery("select recordrelease from RecordRelease recordrelease");
-		List<RecordRelease> recordreleases = q.getResultList();
-		return recordreleases;
+	public List<Record> findAllRecords() {
+		Query q = em.createQuery("select record from Record record");
+		return q.getResultList();
 	}
 
 	@Override
-	public List<RecordRelease> findByGenre(String genre) {
-		Query q = em.createQuery("select recordrelease from RecordRelease recordrelease where recordrelease.genre= :genre");
+	public List<Record> findByGenre(String genre) {
+		Query q = em.createQuery("select record from Record record where record.genre= :genre");
 		q.setParameter("genre", genre);
-		List<RecordRelease> recordreleases = q.getResultList();
-		return recordreleases;
+		return q.getResultList();
 	}
 
 	@Override
-	public List<RecordCopy> findCopiesByCollector(Collector collector) {
-		Query q = em.createQuery("select recordcopy from RecordCopy recordcopy where recordcopy.collectorId= :collectorId");
-		q.setParameter("collectorId", collector.getCollectorId());
-		List<RecordCopy> recordcopies = q.getResultList();
-		return recordcopies;
+	public List<Record> findRecordsByCollector(Collector collector) {
+		int id = collector.getCollectorId();
+		Query q = em.createQuery("select collector.ownedRecords from Collector collector where collector.collectorId= :id");
+		q.setParameter("id", id);
+		return q.getResultList();
 	}
 
+	@Override
+	public void updateCollector(int id, Collector collector) {
+		List<Record> records = collector.getOwnedRecords();
+		Query q = em.createQuery("update Collector collector set collector.ownedRecords= :records where collector.collectorId= :id");
+		q.setParameter("id", id);
+		q.setParameter("records", records);
+		q.executeUpdate();
+		
+	}
+	
 }

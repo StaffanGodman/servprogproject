@@ -19,57 +19,41 @@ public class RecordClient {
       Response response = invocation.invoke();
       System.out.println(response.readEntity(String.class));
       
-      RecordRelease rr = new RecordRelease();
-      rr.setArtist("apan");
-      rr.setGenre("aprock");
-      rr.setReleaseYear(2017);
-      rr.setSerialNo("25454-try-31sdf1");
-      rr.setTitle("djungle boogie");
-      Collector Staffan = new Collector();
-      Staffan.setUserName("Staffan2");
-      Staffan.setEmail("stafffsdfan@mai229.com");
-     
+      Record newRecord = new Record();
+      newRecord.setArtist("Apan311");
+      newRecord.setTitle("Djungelrock113");
+      newRecord.setGenre("Rock");
       
+//      Entity<Record> apanEntity = Entity.entity(newRecord, "application/JSON");
+//      response = client.target("http://localhost:8080/RecordManagement/webservice/record").request().buildPost(apanEntity).invoke();
+//      System.out.println(response.readEntity(Record.class).getTitle());
+//      response.close();
       
-      
-      Entity<RecordRelease> apanEntity = Entity.entity(rr, "application/JSON");
-      
-      response = client.target("http://localhost:8080/RecordManagement/webservice/recordrelease").request().buildPost(apanEntity).invoke();
-      
-      System.out.println(response.readEntity(RecordRelease.class).getArtist());
-      response.close();
-      
+//      Collector Staffan = new Collector();
+//      Staffan.setUserName("Staffan2");
+//      Staffan.setEmail("stafffsdfan@mai229.com");
+      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors/Staffan2").request().buildGet().invoke();
+      Collector Staffan = response.readEntity(Collector.class);
+      System.out.println(Staffan.toString());
+      int id =Staffan.getCollectorId();
+      Staffan.addRecordToOwnedRecords(newRecord);
       Entity<Collector> staffanEntity = Entity.entity(Staffan, "application/JSON");
       
-      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors").request().buildPost(staffanEntity).invoke();
-      System.out.println(response.readEntity(Collector.class).getUserName());
+//      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors").request().buildPost(staffanEntity).invoke();
+      //System.out.println(response.readEntity(Collector.class).getUserName());
+      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors/1").request().buildPut(staffanEntity).invoke();
       response.close();
     
-      //Staffan.createAndAddOwnedCopy(rr);
-      
-     
-      RecordCopy rc = new RecordCopy();
-      rc.setCollector(Staffan);
-      rc.setRecordRelease(rr);
-      Entity<RecordCopy> copyEntity = Entity.entity(rc, "application/JSON");
-      response = client.target("http://localhost:8080/RecordManagement/webservice/recordcopy").request().buildPost(copyEntity).invoke();
-      response.close();
-      /*
-        * 
-        */
 
-      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors").request().buildGet().invoke();
-      List<Collector> collectors = response.readEntity(new GenericType<List<Collector>>() {});
-      for (Collector c : collectors) {
-    	  System.out.println(c);
-      }
-      response.close();
-      response = client.target("http://localhost:8080/RecordManagement/webservice/recordreleases").request().buildGet().invoke();
-      List<RecordRelease> releases = response.readEntity(new GenericType<List<RecordRelease>>() {});
-      for (RecordRelease c : releases) {
-    	  System.out.println(c);
-      }
-      response.close();
-		
-   }
+   
+//
+//      response = client.target("http://localhost:8080/RecordManagement/webservice/collectors").request().buildGet().invoke();
+//      List<Collector> collectors = response.readEntity(new GenericType<List<Collector>>() {});
+//      for (Collector c : collectors) {
+//    	  System.out.println(c);
+//      }
+//      response.close();
+//      
+
+    }
 }
