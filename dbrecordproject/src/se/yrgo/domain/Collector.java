@@ -70,12 +70,22 @@ public class Collector implements java.io.Serializable{
 		return ownedRecords;
 	}
 
+	@Override
+	public String toString() {
+		return "Collector [collectorId=" + collectorId + ", userName=" + userName + ", email=" + email
+				+ ", ownedRecords=" + ownedRecords + "]";
+	}
+
 	public void setOwnedRecords(List<Record> ownedRecords) {
 		this.ownedRecords = ownedRecords;
 	}
 	
 	public void addRecordToOwnedRecords(Record record) {
 		this.ownedRecords.add(record);
+	}
+	
+	public void removeFromOwnedRecords(Record record) {
+		this.ownedRecords.remove(record);
 	}
 
 }

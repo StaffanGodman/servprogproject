@@ -16,4 +16,5 @@ public interface RecordDataAccess {
 	public List<Record>findByGenre(String genre);
 	public List<Record>findRecordsByCollector(Collector collector);
 	public void updateCollector(int id, Collector collector);
+	public Record deleteRecord(int id);
 }

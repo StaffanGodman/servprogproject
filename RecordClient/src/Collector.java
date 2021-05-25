@@ -13,6 +13,12 @@ public class Collector {
 		this.ownedRecords  = new ArrayList<Record>();
 	}
 
+	@Override
+	public String toString() {
+		return "Collector [collectorId=" + collectorId + ", userName=" + userName + ", email=" + email
+				+ ", ownedRecords=" + ownedRecords + "]";
+	}
+
 	public Collector(String userName, String email) {
 		this.userName = userName;
 		this.email = email;
@@ -53,6 +59,10 @@ public class Collector {
 	
 	public void addRecordToOwnedRecords(Record record) {
 		this.ownedRecords.add(record);
+	}
+	
+	public void removeFromOwnedRecords(Record record) {
+		this.ownedRecords.remove(record);
 	}
 
 }

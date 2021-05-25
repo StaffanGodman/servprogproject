@@ -62,4 +62,9 @@ public class RecordManagementImplementation implements RecordManagementService, 
 		
 	}
 
+	@Override
+	public Record doDeleteRecord(int id) {
+		return dao.deleteRecord(id);
+	}
+
 }

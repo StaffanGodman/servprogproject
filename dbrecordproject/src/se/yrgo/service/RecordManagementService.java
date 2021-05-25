@@ -15,4 +15,5 @@ public interface RecordManagementService {
 	public List<Record>getByGenre(String genre);
 	public List<Record>getRecordsByCollector(Collector collector);
 	public void updateCollector(int id, Collector collector);
+	public Record doDeleteRecord(int id);
 }

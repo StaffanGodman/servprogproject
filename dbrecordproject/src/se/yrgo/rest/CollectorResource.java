@@ -46,8 +46,8 @@ public class CollectorResource {
 	@PUT
 	@Produces("application/JSON")
 	@Consumes("application/JSON")
-	@Path("/{collectorID}")
-	public Collector addRecordToCollector(@PathParam("collectorID") int id, Collector collector ) {
+	@Path("{collectorID}")
+	public Collector addRecordToCollector(@PathParam("collectorID")int id, Collector collector ) {
 		service.updateCollector(id, collector);
 		return collector;
 	}

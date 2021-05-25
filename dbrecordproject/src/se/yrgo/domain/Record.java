@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 @Entity
 public class Record {
+	@Override
+	public String toString() {
+		return "Record [recordId=" + recordId + ", title=" + title + ", artist=" + artist + ", genre=" + genre + "]";
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int recordId; // primary key

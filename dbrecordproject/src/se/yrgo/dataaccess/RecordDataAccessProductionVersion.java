@@ -8,6 +8,7 @@ import javax.enterprise.inject.Default;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import se.yrgo.domain.Collector;
 import se.yrgo.domain.Record;
@@ -68,10 +69,27 @@ public class RecordDataAccessProductionVersion implements RecordDataAccess {
 	@Override
 	public void updateCollector(int id, Collector collector) {
 		List<Record> records = collector.getOwnedRecords();
-		Query q = em.createQuery("update Collector collector set collector.ownedRecords= :records where collector.collectorId= :id");
-		q.setParameter("id", id);
-		q.setParameter("records", records);
-		q.executeUpdate();
+		Collector c = (Collector)em.createQuery("from Collector collector where collector.collectorId= :id")
+				.setParameter("id", id).getSingleResult();
+		c.setOwnedRecords(collector.getOwnedRecords());
+		em.flush();
+		
+		
+	}
+
+	@Override
+	public Record deleteRecord(int id) {
+		Record r = (Record) em.createQuery("select record from Record record where record.recordId = :id")
+				.setParameter("id", id).getSingleResult();
+		TypedQuery<Collector> query =  em.createQuery("from Collector collector where :record member of"
+				+ " collector.ownedRecords", Collector.class).setParameter("record", r);
+		List<Collector> collectors = query.getResultList();
+		for (Collector c : collectors) {
+			c.removeFromOwnedRecords(r);
+		}
+		em.flush();
+		em.remove(r);
+		return r;
 		
 	}
 	
