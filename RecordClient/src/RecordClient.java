@@ -65,7 +65,6 @@ public class RecordClient {
   	  System.out.println(c);
     }
     response.close();
-=======
 //// ------------------------------Find all rock records---------------     
 //      response = client.target("http://localhost:8080/RecordManagement/webservice/records/Rock").request().buildGet().invoke();
 //    	List<Record> rockRecords = response.readEntity(new GenericType<List<Record>>() {});
