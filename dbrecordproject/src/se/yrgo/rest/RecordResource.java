@@ -16,7 +16,7 @@ import se.yrgo.domain.Record;
 import se.yrgo.service.RecordManagementServiceLocal;
 
 @Stateless
-@Path("/record")
+@Path("/records")
 public class RecordResource {
 
 	@Inject
