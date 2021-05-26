@@ -49,12 +49,12 @@ public class RecordClient {
 //      addExampleCollector("Nahid", "nahid@mail.com", exampleRecords);
 //      exampleRecords.clear();
 // ------------------------------Find all pop records---------------     
-//      response = client.target("http://localhost:8080/RecordManagement/webservice/record/Pop").request().buildGet().invoke();
-//    	List<Record> popRecords = response.readEntity(new GenericType<List<Record>>() {});
-//      for (Record c : popRecords) {
-//  	  System.out.println(c);
-//    }
-//    response.close();
+      response = client.target("http://localhost:8080/RecordManagement/webservice/record/Pop").request().buildGet().invoke();
+    	List<Record> popRecords = response.readEntity(new GenericType<List<Record>>() {});
+      for (Record c : popRecords) {
+  	  System.out.println(c);
+    }
+    response.close();
     }
     
     	public static void addExampleCollector(String userName, String email, List<Record> ownedRecords) {
