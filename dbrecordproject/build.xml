@@ -9,10 +9,10 @@
 	<!-- select a line that points to the path of your server deployment folder
 
     WINDOWS VERSION:
-    <property name="server-dist" value="C:\Program Files (x86)\wildfly-23.0.2.Final\standalone\deployments"/>
+    <property name="server-dist" value="C:\wildfly-23.0.2.Final\standalone\deployments"/>
 
     MAC/LINUX VERSION:
-    <property name="server-dist" value="/opt/wildfly/wildfly/wildfly-10.0.0.Final/standalone/deployments"/>
+    <property name="server-dist" value="/opt/wildfly/wildfly/wildfsly-10.0.0.Final/standalone/deployments"/>
     -->
 
 	<property name="server-dist" value="C:\wildfly-23.0.2.Final\standalone\deployments"/>
